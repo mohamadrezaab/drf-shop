@@ -4,3 +4,4 @@ db.sqlite
 .env
 .vscode
 schema.yaml
+htmlcov/

@@ -1,5 +1,5 @@
 import factory
-from core.product.models import Category, Brand, Product
+from core.product.models import Category, Brand, Product, ProductLine
 
 
 
@@ -26,3 +26,16 @@ class ProductFactory(factory.django.DjangoModelFactory):
     is_digital = True
     category = factory.SubFactory(CategoryFactory)
     brand = factory.SubFactory(BrandFactory)
+    
+   
+class ProductLineFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = ProductLine
+        
+    price = '10.00'
+    sku = '12345'
+    stock_qty  = 1
+    product = factory.SubFactory(ProductFactory)
+    is_active  = True
+    
+    
