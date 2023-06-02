@@ -10,6 +10,8 @@ from pygments import highlight
 from pygments.formatters import TerminalFormatter
 from pygments.lexers import SqlLexer
 from sqlparse import format
+from django.db.models import Prefetch
+
 
 
 
@@ -50,8 +52,15 @@ class ProductViewSet(viewsets.ViewSet):
     
     
     def retrieve(self, request, slug=None):
-        serializer = ProductSerializers(self.queryset.filter(slug=slug).select_related('category'), many=True)
+        #serializer = ProductSerializers(self.queryset.filter(slug=slug).select_related('category'), many=True)
+        serializer = ProductSerializers(
+            Product.objects.filter(slug=slug)
+            .select_related('category', 'brand')
+            .prefetch_related(Prefetch('product_line__product_image')),
+            many=True,
+        )
         data =  Response(serializer.data) 
+        
         q = list(connection.queries)
         print(len(q))
         for qs in q:

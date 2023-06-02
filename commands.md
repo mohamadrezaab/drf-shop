@@ -7,6 +7,7 @@ pytest
 drf-spectacular
 coverage
 factory-boy
+pillow
 
 # Commands
 ./python manage.py spectacular --file schema.yaml
